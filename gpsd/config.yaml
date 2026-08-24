@@ -1,0 +1,30 @@
+name: GPSD
+description: "Expose a USB GPS receiver via GPSd on TCP port 2947."
+version: 0.1.0
+slug: gpsd
+url: https://github.com/thimslugga/haos-addons-thimslugga/tree/main/gpsd
+homeassistant: "2026.5.0"
+arch:
+  - aarch64
+  - armv7
+  - armhf
+  - amd64
+startup: services
+boot: auto
+init: false
+uart: true
+udev: true
+host_network: false
+ports:
+  2947/tcp: 2947
+ports_description:
+  2947/tcp: "GPSd TCP port stream"
+watchdog: "tcp://[HOST]:[PORT:2947]"
+options:
+  device: "/dev/ttyACM0"
+  baud: 9600
+  gpsd_options: "-n -G -D 2"
+schema:
+  device: "device(subsystem=tty)"
+  baud: "int(1200,921600)"
+  gpsd_options: str
